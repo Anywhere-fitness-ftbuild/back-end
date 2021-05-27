@@ -1,12 +1,10 @@
 const router = require("express").Router()
-
-const Classes = require("./model")
-
-const { valClassId, valClass, valInstructorUsername } = require("../middleware")
+const Class = require("./model")
+const { valClassId, valClass, } = require("../middleware")
 
 router.get("/", async (req, res, next) => {
   try {
-    const data = await Classes.find()
+    const data = await Class.find()
     return res.status(200).json(data)
   } catch (err) {
     next(err)
@@ -15,17 +13,16 @@ router.get("/", async (req, res, next) => {
 
 router.get("/:id", valClassId, async (req, res, next) => {
   try {
-    const data = await Classes.findBy({ class_id: req.params.id })
+    const data = await Class.findBy({ class_id: req.params.id })
     return res.status(200).json(data)
   } catch (err) {
     next(err)
   }
 })
 
-router.post("/", /*valClass, valInstructorUsername,*/ async (req, res, next) => {
+router.post("/", async (req, res, next) => {
   try {
-    // const data = await Classes.add(req.body)
-    return res.status(200).json("class posted"/*data*/)
+    return res.status(200).json("class posted")
   } catch (err) {
     next(err)
   }
@@ -33,7 +30,7 @@ router.post("/", /*valClass, valInstructorUsername,*/ async (req, res, next) => 
  
 router.put("/:id", valClassId, valClass, async (req, res, next) => {
   try {
-    const data = await Classes.update(req.body, req.params.id)
+    const data = await Class.update(req.body, req.params.id)
     return res.status(200).json(data)
   } catch (err) {
     next(err)
@@ -41,7 +38,7 @@ router.put("/:id", valClassId, valClass, async (req, res, next) => {
 })
 
 router.delete('/:id', valClassId, async (req, res) => {
-  Classes.remove(req.params.id)
+  Class.remove(req.params.id)
   return res.status(200).json(`The class with id ${req.params.id} was removed`)  
 });
 

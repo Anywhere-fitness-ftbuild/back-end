@@ -1,5 +1,4 @@
 const router = require("express").Router()
-
 const Users = require("../users/model")
 
 router.get("/", async (req, res, next) => {
@@ -13,14 +12,13 @@ router.get("/", async (req, res, next) => {
 
 router.get("/:id", async (req, res, next) => {
   const { id } = req.params
-
   try {
     const data = await Users.findBy({ id })
 
     if (data) {
       return res.status(200).json(data)
     } else {
-      res.status(400).json(`The user with id ${id} could not be found`)
+      res.status(400).json(`User with id: ${id}, can not be found.`)
     }
   } catch (err) {
     next(err)
